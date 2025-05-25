@@ -6,7 +6,7 @@ plugins {
 	kotlin("plugin.jpa") version "1.9.25"
 }
 
-group = "io.yard"
+group = "io.marelso"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+//	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
