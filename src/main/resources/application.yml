@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: Yard
+  data:
+    mongodb:
+      database: yard
+      host: localhost
