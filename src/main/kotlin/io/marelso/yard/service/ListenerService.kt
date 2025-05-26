@@ -17,12 +17,11 @@ class ListenerService<T> {
         client.onTimeout { listeners.remove(this) }
     }.client
 
-    fun notifyListeners(reference: String, data: T) {
-        listeners.filter { it.reference == reference }
-            .forEach { listener ->
+    fun notifyListeners(reference: String, data: T) = listeners
+        .filter { it.reference == reference }
+        .forEach { listener ->
             notifyClient(listener.client, data)
         }
-    }
 
     private fun notifyClient(client: SseEmitter, data: T) {
         try {
