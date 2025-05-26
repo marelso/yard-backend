@@ -4,5 +4,5 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 
 data class DeviceListener(
     val reference: String,
-    val emitter: SseEmitter
+    val client: SseEmitter
 )
