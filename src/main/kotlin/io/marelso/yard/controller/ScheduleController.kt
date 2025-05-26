@@ -12,7 +12,10 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 @RequestMapping("/api/v1/schedule")
 class ScheduleController(private val scheduleService: ScheduleService) {
     @PostMapping
-    fun post(@RequestBody dto: CreateScheduleDTO) = ResponseEntity.ok(scheduleService.create(dto))
+    fun post(
+        @RequestParam("reference") reference: String,
+        @RequestBody dto: CreateScheduleDTO
+    ) = ResponseEntity.ok(scheduleService.create(reference, dto))
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

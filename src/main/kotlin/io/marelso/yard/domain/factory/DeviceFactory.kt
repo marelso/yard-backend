@@ -6,21 +6,21 @@ import io.marelso.yard.domain.dto.DeviceCreateDTO
 import io.marelso.yard.domain.dto.DeviceDTO
 
 class DeviceFactory {
-    fun from(device: Device): DeviceDTO = DeviceDTO(
+    fun from(device: Device, schedules: List<Schedule> = listOf()): DeviceDTO = DeviceDTO(
         reference = device.reference,
         name = device.name,
-        schedules = device.schedules
-    )
-
-    fun from(dto: DeviceCreateDTO, schedules: List<Schedule>): Device = Device(
-        reference = dto.reference,
-        name = dto.name,
         schedules = schedules
     )
 
-    fun from(dto: DeviceDTO): Device = Device(
+    fun from(dto: DeviceCreateDTO, schedules: List<String> = listOf()): Device = Device(
         reference = dto.reference,
         name = dto.name,
-        schedules = dto.schedules
+        scheduleIds = schedules
+    )
+
+    fun from(dto: DeviceDTO, schedules: List<Schedule>): Device = Device(
+        reference = dto.reference,
+        name = dto.name,
+        scheduleIds = schedules.map { it.id.orEmpty() }.filter { it.isNotBlank() }
     )
 }

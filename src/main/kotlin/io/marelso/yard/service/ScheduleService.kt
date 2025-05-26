@@ -1,5 +1,6 @@
 package io.marelso.yard.service
 
+import io.marelso.yard.domain.Device
 import io.marelso.yard.domain.Schedule
 import io.marelso.yard.domain.dto.CreateScheduleDTO
 import io.marelso.yard.domain.factory.ScheduleFactory
@@ -17,9 +18,19 @@ class ScheduleService(
 ) {
     private val listenerService = ListenerService<Schedule>()
 
-    fun create(dto: CreateScheduleDTO): Schedule = repository.save(factory.from(dto)).apply {
-        val device = deviceService.findByScheduleId(id.orEmpty())
-        listenerService.notifyListeners(device.reference.orEmpty(), this)
+    fun create(reference: String, dto: CreateScheduleDTO): Schedule {
+        val device: Device = deviceService.findByReference(reference)
+        val schedule = repository.save(factory.from(dto))
+
+        deviceService.update(device.copy(
+            scheduleIds = device.scheduleIds.toMutableList().apply {
+                add(schedule.id.orEmpty())
+            }
+        ))
+
+        return schedule.apply {
+            listenerService.notifyListeners(device.reference.orEmpty(), this)
+        }
     }
 
     fun delete(id: String) = findById(id).apply {
