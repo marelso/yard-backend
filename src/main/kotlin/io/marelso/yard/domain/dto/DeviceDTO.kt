@@ -7,3 +7,9 @@ data class DeviceDTO(
     val name: String? = null,
     val schedules: List<Schedule> = listOf()
 )
+
+data class DeviceCreateDTO(
+    val reference: String? = null,
+    val name: String? = null,
+    val schedules: List<CreateScheduleDTO> = listOf()
+)

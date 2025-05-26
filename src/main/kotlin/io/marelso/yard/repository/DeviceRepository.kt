@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface DeviceRepository: MongoRepository<Device, String> {
     fun findByReference(reference: String): Device?
+    fun findDeviceBySchedulesId(scheduleId: String): Device?
 }

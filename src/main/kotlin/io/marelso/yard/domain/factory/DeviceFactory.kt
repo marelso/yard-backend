@@ -1,6 +1,8 @@
 package io.marelso.yard.domain.factory
 
 import io.marelso.yard.domain.Device
+import io.marelso.yard.domain.Schedule
+import io.marelso.yard.domain.dto.DeviceCreateDTO
 import io.marelso.yard.domain.dto.DeviceDTO
 
 class DeviceFactory {
@@ -8,6 +10,12 @@ class DeviceFactory {
         reference = device.reference,
         name = device.name,
         schedules = device.schedules
+    )
+
+    fun from(dto: DeviceCreateDTO, schedules: List<Schedule>): Device = Device(
+        reference = dto.reference,
+        name = dto.name,
+        schedules = schedules
     )
 
     fun from(dto: DeviceDTO): Device = Device(

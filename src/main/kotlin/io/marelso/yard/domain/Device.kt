@@ -4,5 +4,5 @@ data class Device(
     val id: String? = null,
     val reference: String? = null,
     val name: String? = null,
-    val schedules: List<Schedule> = listOf(),
+    val scheduleIds: List<String> = listOf(),
 )

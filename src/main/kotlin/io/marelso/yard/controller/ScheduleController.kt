@@ -19,5 +19,5 @@ class ScheduleController(private val scheduleService: ScheduleService) {
     fun delete(@PathVariable("id") id: String) = scheduleService.delete(id)
 
     @GetMapping("/subscribe", MediaType.TEXT_EVENT_STREAM_VALUE)
-    fun subscribe(): SseEmitter = scheduleService.subscribe()
+    fun subscribe(@RequestParam("reference") reference: String): SseEmitter = scheduleService.subscribe(reference)
 }
