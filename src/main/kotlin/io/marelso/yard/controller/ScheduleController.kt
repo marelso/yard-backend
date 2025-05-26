@@ -1,5 +1,6 @@
 package io.marelso.yard.controller
 
+import io.marelso.yard.domain.Schedule
 import io.marelso.yard.domain.dto.CreateScheduleDTO
 import io.marelso.yard.service.ScheduleService
 import org.springframework.http.HttpStatus
@@ -23,4 +24,9 @@ class ScheduleController(private val scheduleService: ScheduleService) {
 
     @GetMapping("/subscribe", MediaType.TEXT_EVENT_STREAM_VALUE)
     fun subscribe(@RequestParam("reference") reference: String): SseEmitter = scheduleService.subscribe(reference)
+
+    @GetMapping
+    fun get(
+        @RequestParam("reference") reference: String
+    ): ResponseEntity<List<Schedule>> = ResponseEntity.ok(scheduleService.list(reference))
 }

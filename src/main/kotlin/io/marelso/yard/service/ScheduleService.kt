@@ -35,6 +35,11 @@ class ScheduleService(
 
     fun delete(id: String) = findById(id).apply {
         val device = deviceService.findByScheduleId(id)
+        deviceService.update(device.copy(
+            scheduleIds = device.scheduleIds.toMutableList().apply {
+                remove(id)
+            }
+        ))
         repository.deleteById(id)
 
         listenerService.notifyListeners(device.reference.orEmpty(), this)
@@ -43,4 +48,6 @@ class ScheduleService(
     private fun findById(id: String) = repository.findByIdOrNull(id) ?: throw RuntimeException("Schedule with id $id not found")
 
     fun subscribe(reference: String): SseEmitter = listenerService.subscribe(reference)
+
+    fun list(reference: String): List<Schedule> = deviceService.findByReference(reference).scheduleIds.map(::findById)
 }
