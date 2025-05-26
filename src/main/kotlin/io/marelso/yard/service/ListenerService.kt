@@ -2,7 +2,6 @@ package io.marelso.yard.service
 
 import io.marelso.yard.domain.DeviceListener
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 class ListenerService<T> {
 
@@ -10,7 +9,7 @@ class ListenerService<T> {
 
     fun subscribe(reference: String): SseEmitter = DeviceListener(
         reference = reference,
-        client = SseEmitter()
+        client = SseEmitter(0L)
     ).apply {
         listeners.add(this)
 
@@ -27,7 +26,7 @@ class ListenerService<T> {
 
     private fun notifyClient(client: SseEmitter, data: T) {
         try {
-            client.send(data as JvmType.Object)
+            client.send(data as Any)
         } catch (exception: Exception) {
             client.complete()
         }
