@@ -31,7 +31,11 @@ class DeviceService(
 
     fun update(device: Device, schedules: List<Schedule> = listOf()): DeviceDTO = factory.from(deviceRepository.save(device), schedules)
 
-    fun delete(reference: String) = findByReference(reference).id?.let(deviceRepository::deleteById)
+    fun delete(reference: String) = findByReference(reference).apply {
+        scheduleIds.forEach(scheduleService::delete)
+
+        id?.let(deviceRepository::deleteById)
+    }
 
     fun findByReference(reference: String): Device {
         return deviceRepository.findByReference(reference) ?: throw RuntimeException("Device with id $reference not found")
